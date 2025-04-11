@@ -15,7 +15,7 @@ namespace ticketHubFunction
         }
 
         [Function(nameof(Function1))]
-        public void Run([QueueTrigger("tickethub", Connection = "nscc-0499503-mssql-sever.database.windows.net")] QueueMessage message)
+        public void Run([QueueTrigger("tickethub", Connection = "AzureWebJobsStorage")] QueueMessage message)
         {
             _logger.LogInformation($"C# Queue trigger function processed: {message.MessageText}");
         }
