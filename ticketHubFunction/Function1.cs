@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,10 @@ namespace ticketHubFunction
         public void Run([QueueTrigger("tickethub", Connection = "AzureWebJobsStorage")] QueueMessage message)
         {
             _logger.LogInformation($"C# Queue trigger function processed: {message.MessageText}");
+
+            var customer = JsonSerializer.Deserialize<Customers>(message.MessageId);
+
+
         }
     }
 }
