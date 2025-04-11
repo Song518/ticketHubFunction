@@ -21,7 +21,18 @@ namespace ticketHubFunction
         {
             _logger.LogInformation($"C# Queue trigger function processed: {message.MessageText}");
 
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
             var customer = JsonSerializer.Deserialize<Customers>(message.MessageId);
+
+            if (customer == null)
+            {
+                _logger.LogError("Failed to deserialize the message into a Customer object");
+                return;
+            }
 
             // get connection string from app settings
             string? connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
